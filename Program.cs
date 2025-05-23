@@ -96,8 +96,8 @@ class SocketClient
         // Retrieve the database token and initialize the InfluxDB client
         // Update token, org and client as needed.
         string token = Environment.GetEnvironmentVariable("INFLUXDB_TOKEN")!;
-        const string org = "MY_ORG";
-        using var client = new InfluxDBClient("http://100.105.254.23:8086", "2JHPokjavRfLjptiAlNpJ_9e0ND5sfMPr_AJCE1Xjp_sJVYzEFThvesW-9UEEVa5IzQMTEvJZMf0H6y5rwUcEQ==");
+        const string org = "OMRON";
+        using var client = new InfluxDBClient("http://192.168.1.62:8086", "Lx37wg69CCoNulSyQl4vh1yWYCHZ0fCRv76eZvM6lk4KjBnydfIx5eil4gVe6n8V6sln1tT1q7sblqChXeLDgg==");
 
         while (true)
         {
@@ -109,7 +109,7 @@ class SocketClient
                     for (var i = 0; i < atoms.Count(); i++)
                     {
                         // Formulate query for the EXECUTE phase
-                        var query = $@"from(bucket: ""NEW_BUCKET"")
+                        var query = $@"from(bucket: ""OMRON_BUCKET"")
             |> range(start:{queryStartTime}, stop: now())
             |> filter(fn: (r) => r[""_measurement""] == ""machine_status"")
             |> filter(fn: (r) => r[""_field""] == ""StateCurrent"")
@@ -142,7 +142,7 @@ class SocketClient
                     for (var i = 0; i < atoms.Count(); i++)
                     {
                         // Formulate query for the COMPLETE phase
-                        var query = $@"from(bucket: ""NEW_BUCKET"")
+                        var query = $@"from(bucket: ""OMRON_BUCKET"")
             |> range(start:{queryStartTime}, stop: now())
             |> filter(fn: (r) => r[""_measurement""] == ""machine_status"")
              |> filter(fn: (r) => r[""_field""] == ""StateCurrent"")
